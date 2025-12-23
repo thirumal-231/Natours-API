@@ -61,13 +61,22 @@ exports.login = catchAsync(async (req, res, next) => {
   // 2. check if user exists and password is correct
   const user = await User.findOne({ email }).select('+password');
 
-  if (!user || !(await user.correctPassword(password, user.password))) {
+  if (!(await user.correctPassword(password, user.password))) {
+    console.log('Pass:', password, 'new:', user.password);
     // 401 unauthorised
     return next(new AppError('Incorrect Email or Password!', 401));
   }
 
   createSendToken(user, 200, res);
 });
+
+exports.logout = (req, res) => {
+  res.cookie('jwt', 'loggedout', {
+    expires: new Date(Date.now() + 10 * 1000),
+    httpOnly: true,
+  });
+  res.status(200).json({ status: 'success' });
+};
 
 exports.protect = catchAsync(async (req, res, next) => {
   // 1. Get token and check is this there
@@ -143,8 +152,8 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
     });
   } catch (error) {
     // no need for passwordForetToken and expires if token is not sent right
-    user.passworForgetToken = undefined;
-    user.passworForgetTokenExpires = undefined;
+    user.passwordForgetToken = undefined;
+    user.passwordForgetTokenExpires = undefined;
     await user.save({ validateBeforeSave: false });
 
     return next(

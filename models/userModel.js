@@ -44,22 +44,22 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-// userSchema.pre('save', async function (next) {
-//   // encrypt only if password is modified
-//   if (!this.isModified('password')) {
-//     return;
-//   }
+userSchema.pre('save', async function (next) {
+  // encrypt only if password is modified
+  if (!this.isModified('password')) {
+    return;
+  }
 
-//   this.password = await bcrypt.hash(this.password, 10);
-//   this.passwordConfirm = undefined;
-//   next();
-// });
+  this.password = await bcrypt.hash(this.password, 10);
+  this.passwordConfirm = undefined;
+  next();
+});
 
-// userSchema.pre('save', async function (next) {
-//   if (!this.isModified('password') || this.isNew) return next();
-//   this.passwordChangedAt = Date.now() - 1000;
-//   next();
-// });
+userSchema.pre('save', async function (next) {
+  if (!this.isModified('password') || this.isNew) return next();
+  this.passwordChangedAt = Date.now() - 1000;
+  next();
+});
 
 userSchema.pre(/^find/, function (next) {
   this.find({ active: { $ne: false } });
