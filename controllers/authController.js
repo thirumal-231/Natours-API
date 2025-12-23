@@ -53,17 +53,19 @@ exports.signup = catchAsync(async (req, res, next) => {
 exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
 
-  // 1. if email and password exist
   if (!email || !password) {
     return next(new AppError('Please provide email and password', 400));
   }
 
-  // 2. check if user exists and password is correct
   const user = await User.findOne({ email }).select('+password');
 
-  if (!(await user.correctPassword(password, user.password))) {
-    console.log('Pass:', password, 'new:', user.password);
-    // 401 unauthorised
+  if (!user || !user.password) {
+    return next(new AppError('Incorrect Email or Password!', 401));
+  }
+
+  const isCorrect = await user.correctPassword(password, user.password);
+
+  if (!isCorrect) {
     return next(new AppError('Incorrect Email or Password!', 401));
   }
 
@@ -190,8 +192,8 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   user.password = req.body.password;
   user.passwordConfirm = req.body.passwordConfirm;
   // if password is changed forgot token and expires are not required anymore
-  user.passworForgetToken = undefined;
-  user.passworForgetTokenExpires = undefined;
+  user.passwordForgetToken = undefined;
+  user.passwordForgetTokenExpires = undefined;
   await user.save();
 
   // 4. update passwordchanged at

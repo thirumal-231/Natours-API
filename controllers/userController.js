@@ -49,6 +49,10 @@ exports.updateMe = catchAsync(async (req, res, next) => {
           .upload_stream(
             {
               folder: 'users',
+              width: 500,
+              height: 500,
+              crop: 'fill',
+              gravity: 'face',
               public_id: `user-${req.user.id}`,
               overwrite: true,
             },
