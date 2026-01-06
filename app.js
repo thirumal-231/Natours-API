@@ -26,6 +26,14 @@ app.use(
 app.use(
   helmet({
     crossOriginResourcePolicy: { policy: 'cross-origin' },
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", 'https://js.stripe.com'],
+        frameSrc: ["'self'", 'https://js.stripe.com'],
+        connectSrc: ["'self'", 'http://localhost:3000', 'https://*.stripe.com'],
+      },
+    },
   }),
 );
 
