@@ -19,15 +19,18 @@ const bookingRouter = require('./routes/bookingRoutes');
 const app = express();
 app.enable('trust proxy');
 app.use(cookieParser());
-app.use(
-  cors({
-    origin:
-      process.env.NODE_ENV === 'production'
-        ? 'https://natours.trustudios.in'
-        : 'http://localhost:3000',
-    credentials: true,
-  }),
-);
+
+const corsOptions = {
+  origin:
+    process.env.NODE_ENV === 'production'
+      ? 'https://natours.trustudios.in'
+      : 'http://localhost:3000',
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
+
+app.options('*', cors(corsOptions));
 app.use(
   helmet({
     crossOriginResourcePolicy: { policy: 'cross-origin' },
@@ -39,6 +42,7 @@ app.use(
         connectSrc: [
           "'self'",
           'https://natours.trustudios.in',
+          'https://natours-api-3dlg.onrender.com',
           'https://*.stripe.com',
         ],
       },
