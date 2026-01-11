@@ -1,5 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const express = require('express');
+const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const rateLimiter = require('express-rate-limit');
 const helmet = require('helmet');
@@ -35,6 +36,15 @@ app.use(
       },
     },
   }),
+);
+
+const bookingController = require('./controllers/bookingController');
+
+// MUST be before express.json()
+app.post(
+  '/webhook-checkout',
+  bodyParser.raw({ type: 'application/json' }),
+  bookingController.webhookCheckout,
 );
 
 const limiter = rateLimiter({
