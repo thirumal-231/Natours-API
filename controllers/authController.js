@@ -20,8 +20,8 @@ const createSendToken = (user, statusCode, res) => {
       Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000,
     ),
     httpOnly: false,
-    sameSite: 'lax',
-    secure: false, // REQUIRED with sameSite='none'
+    sameSite: 'none',
+    secure: true, // REQUIRED with sameSite='none'
   };
 
   res.cookie('jwt', token, cookieOptions);
@@ -83,7 +83,7 @@ exports.logout = (req, res) => {
     expires: new Date(Date.now() + 10 * 1000),
     httpOnly: true,
     // Add these two lines to match createSendToken
-    sameSite: 'None',
+    sameSite: 'none',
     secure: true,
   });
   res.status(200).json({ status: 'success' });
