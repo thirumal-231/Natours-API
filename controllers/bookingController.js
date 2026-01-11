@@ -12,8 +12,15 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   // 2 create checkout session
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ['card'],
-    success_url: `http://localhost:3000/`,
-    cancel_url: `http://localhost:3000/tour/${tour.slug}`,
+    // Use environment variables or ternary for production URL
+    success_url:
+      process.env.NODE_ENV === 'production'
+        ? `https://natours.trustudios.in/my-tours`
+        : `http://localhost:3000/my-tours`,
+    cancel_url:
+      process.env.NODE_ENV === 'production'
+        ? `https://natours.trustudios.in/tour/${tour.slug}`
+        : `http://localhost:3000/tour/${tour.slug}`,
     customer_email: req.user.email,
     client_reference_id: req.params.tourID,
     line_items: [
