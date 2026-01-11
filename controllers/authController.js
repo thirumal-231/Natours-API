@@ -47,9 +47,13 @@ exports.signup = catchAsync(async (req, res, next) => {
     role: req.body.role,
     passwordChangedAt: req.body.passwordChangedAt,
   });
-  const url = `${req.protocol}://localhost:${process.env.FE_PORT}/me`;
+  const frontendURL =
+    process.env.NODE_ENV === 'production'
+      ? 'https://natours.trustudios.in'
+      : 'http://localhost:3000';
+  const url = `${frontendURL}/me`;
   console.log(url);
-  new Email(newUser, url).sendWelcome();
+  //new Email(newUser, url).sendWelcome();
   createSendToken(newUser, 201, res);
 });
 
@@ -144,7 +148,12 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
 
   // 3. Send it to users email
   try {
-    const resetURL = `${req.protocol}://localhost:${process.env.FE_PORT}/api/v1/users/resetPassword/${forgetToken}`;
+    const frontendURL =
+      process.env.NODE_ENV === 'production'
+        ? 'https://natours.trustudios.in'
+        : 'http://localhost:3000';
+
+    const resetURL = `${frontendURL}/resetPassword/${forgetToken}`;
     await new Email(user, resetURL).sendPasswordReset();
 
     res.status(200).json({

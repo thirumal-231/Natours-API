@@ -17,10 +17,14 @@ const reviewRouter = require('./routes/reviewRoutes');
 const bookingRouter = require('./routes/bookingRoutes');
 
 const app = express();
+app.enable('trust proxy');
 app.use(cookieParser());
 app.use(
   cors({
-    origin: 'http://localhost:3000',
+    origin:
+      process.env.NODE_ENV === 'production'
+        ? 'https://natours.trustudios.in'
+        : 'http://localhost:3000',
     credentials: true,
   }),
 );
@@ -32,7 +36,11 @@ app.use(
         defaultSrc: ["'self'"],
         scriptSrc: ["'self'", 'https://js.stripe.com'],
         frameSrc: ["'self'", 'https://js.stripe.com'],
-        connectSrc: ["'self'", 'http://localhost:3000', 'https://*.stripe.com'],
+        connectSrc: [
+          "'self'",
+          'https://natours.trustudios.in',
+          'https://*.stripe.com',
+        ],
       },
     },
   }),

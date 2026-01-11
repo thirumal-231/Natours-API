@@ -12,7 +12,11 @@ const userSchema = new mongoose.Schema({
     lowercase: true,
     validate: [validator.isEmail, 'Please provide a valid email'],
   },
-  photo: { type: String, default: 'default.jpg' },
+  photo: {
+    type: String,
+    default:
+      'https://res.cloudinary.com/dmvbudba3/image/upload/v1768107107/default_wjbkc4.jpg',
+  },
   role: {
     type: String,
     enum: ['user', 'guide', 'lead-guide', 'admin'],
@@ -44,6 +48,7 @@ const userSchema = new mongoose.Schema({
   },
 });
 
+// comment this while importing
 userSchema.pre('save', async function (next) {
   // encrypt only if password is modified
   if (!this.isModified('password')) {

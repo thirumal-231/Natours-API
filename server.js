@@ -10,7 +10,18 @@ process.on('uncaughtException', (err) => {
 dotenv.config({ path: './config.env' });
 const app = require('./app');
 
-const DB = process.env.DATABASE_LOCAL;
+// server.js
+const DB = process.env.DATABASE.replace(
+  '<PASSWORD>',
+  process.env.DATABASE_PASSWORD,
+);
+
+mongoose
+  .connect(DB, {
+    useNewUrlParser: true, // Fixes the first DeprecationWarning
+    useUnifiedTopology: true, // Recommended for modern drivers
+  })
+  .then(() => console.log('DB connection successful!'));
 
 mongoose.connect(DB).then((con) => {
   console.log('DB Connected');
