@@ -1,6 +1,6 @@
 # 🏕️ Natours - Adventurous Travel Booking Platform
 
-![Natours Banner](https://natours.trustudios.in/img/logo-green-2x.png)
+![Natours Banner]([https://res.cloudinary.com/dmvbudba3/image/upload/v1768134941/logo-green_auxbek.png])
 
 ## 📖 Project Overview
 
