@@ -27,7 +27,7 @@ mongoose.connect(DB).then((con) => {
   console.log('DB Connected');
 });
 
-const port = process.env.X_ZOHO_CATALYST_LISTEN_PORT || 3003;
+const port = process.env.PORT || 3003;
 const server = app.listen(port, () => {
   console.log(`LISTENING ON PORT: ${port}`);
 });
