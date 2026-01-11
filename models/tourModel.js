@@ -131,40 +131,31 @@ tourSchema.virtual('reviews', {
   localField: '_id',
 });
 
-tourSchema.pre('save', function (next) {
+tourSchema.pre('save', function () {
   this.slug = slugify(this.name, { lower: true });
-  next();
 });
 
-tourSchema.pre(/^find/, function (next) {
+tourSchema.pre(/^find/, function () {
   this.populate({
     path: 'guides',
     select: '-__v -passwordChangedAt',
   });
-  next();
 });
 
-tourSchema.post('save', (doc, next) => {
-  next();
-});
-
-tourSchema.pre(/^find/, function (next) {
+tourSchema.pre(/^find/, function () {
   this.find({ secretTour: { $ne: true } });
 
   this.start = Date.now();
-  next();
 });
 
-tourSchema.post(/^find/, function (docs, next) {
+tourSchema.post(/^find/, function (docs) {
   // console.log(`Query took ${Date.now() - this.start} ms.`);
   // console.log(docs);
-  next();
 });
 
-// tourSchema.pre('aggregate', function (next) {
+// tourSchema.pre('aggregate', function () {
 //   this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
 //   console.log(this.pipeline());
-//   next();
 // });
 
 const Tour = mongoose.model('Tour', tourSchema);
