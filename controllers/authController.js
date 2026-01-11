@@ -103,6 +103,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   }
   // console.log('TOKEN', req.cookies.jwt);
   if (!token) {
+    console.log('next >>>>', next);
     return next(new AppError("You're not logged in, Please log in.", 401));
   }
   // 2. Verify token
