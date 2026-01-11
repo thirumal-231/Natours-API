@@ -17,10 +17,13 @@ const DB = process.env.DATABASE.replace(
 );
 
 mongoose
-  .connect(DB, {
-    useNewUrlParser: true, // Fixes the first DeprecationWarning
-    useUnifiedTopology: true, // Recommended for modern drivers
-  })
+  .connect(
+    DB,
+    //   {
+    //   useNewUrlParser: true, // Fixes the first DeprecationWarning
+    //   useUnifiedTopology: true, // Recommended for modern drivers
+    // }
+  )
   .then(() => console.log('DB connection successful!'));
 
 mongoose.connect(DB).then((con) => {
