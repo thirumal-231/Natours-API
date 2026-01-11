@@ -95,7 +95,7 @@ app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
 app.use('/api/v1/bookings', bookingRouter);
 
-app.all('*', (req, res, next) => {
+app.all('/{*splat}', (req, res, next) => {
   next(new AppError(`Cant find the ${req.originalUrl} on the server.`, 404));
 });
 
