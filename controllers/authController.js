@@ -83,8 +83,8 @@ exports.logout = (req, res) => {
     expires: new Date(Date.now() + 10 * 1000),
     httpOnly: true,
     // Add these two lines to match createSendToken
-    sameSite: 'lax',
-    secure: false,
+    sameSite: 'None',
+    secure: true,
   });
   res.status(200).json({ status: 'success' });
 };
