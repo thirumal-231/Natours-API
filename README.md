@@ -16,7 +16,7 @@ The application follows a **MVC (Model-View-Controller)** architecture and lever
 - **Object Modeling**: [Mongoose](https://mongoosejs.com/) for elegant MongoDB object modeling.
 - **Image Management**: [Cloudinary](https://cloudinary.com/) for optimizing and serving images.
 - **Payments**: [Stripe](https://stripe.com/) for secure payment processing.
-- **Frontend**: Server-side rendered views using [Pug](https://pugjs.org/) templates, hosted on [Render](https://render.com).
+- **Frontend**: Natours is a single page application with React for frontend, hosted on [Render](https://render.com).
 
 ## ✨ Key Features
 
