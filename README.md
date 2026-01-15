@@ -1,7 +1,7 @@
 # 🏕️ Natours - Adventurous Travel Booking Platform
 
-![Natours Banner](<img width="2752" height="1536" alt="Node-overview" src="https://github.com/user-attachments/assets/3b9d27fb-6f50-4f05-8c45-2e987e63353a" />
-)
+<img width="2752" height="1536" alt="Node-overview" src="https://github.com/user-attachments/assets/3b9d27fb-6f50-4f05-8c45-2e987e63353a" />
+
 
 ## 📖 Project Overview
 
