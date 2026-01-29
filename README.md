@@ -98,8 +98,8 @@ CLOUDINARY_API_SECRET=your_api_secret
 1.  **Clone the repository**
 
     ```bash
-    git clone https://github.com/your-username/natours.git
-    cd natours
+    git clone https://github.com/thirumal-231/Natours-API.git
+    cd Natours-API
     ```
 
 2.  **Install dependencies**
